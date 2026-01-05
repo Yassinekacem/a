@@ -1,6 +1,6 @@
 # Insurance MLOps Project
 
-This project implements an end-to-end MLOps workflow to predict whether a customer is likely to purchase additional insurance. It includes data processing, model training, a web prediction service, containerization with Docker, and deployment on Google Kubernetes Engine (GKE) on Google Cloud Platform [web:43][web:53].
+This project implements an end-to-end MLOps workflow to predict whether a customer is likely to purchase additional insurance. It includes data processing, model training, a web prediction service, containerization with Docker, and deployment on Google Kubernetes Engine (GKE) on Google Cloud Platform .
 
 ---
 
@@ -37,3 +37,4 @@ source venv/bin/activate
 
 pip install --upgrade pip
 pip install -r requirements.txt
+
