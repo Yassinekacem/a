@@ -1,4 +1,3 @@
-# Trigger CI: small non-breaking change
 # steps/train.py
 import os
 import joblib
