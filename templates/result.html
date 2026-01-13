@@ -1,95 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Result</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .result-card {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .result-card:hover {
-            transform: translateY(-5px);
-        }
-        .emoji {
-            font-size: 8rem;
-            margin: 1rem 0;
-            animation: bounce 1s infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        .likely {
-            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
-            box-shadow: 0 4px 15px rgba(168, 230, 207, 0.5);
-        }
-        .unlikely {
-            background: linear-gradient(135deg, #ffd3b6 0%, #ffaaa5 100%);
-            box-shadow: 0 4px 15px rgba(255, 170, 165, 0.5);
-        }
-        .back-button {
-            background: linear-gradient(135deg, #4299e1 0%, #667eea 100%);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-        .back-button:hover {
-            transform: translateY(-2px);
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prediction Result</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body{
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 450px at 10% 15%, rgba(102,126,234,.55), transparent 60%),
+        radial-gradient(900px 450px at 90% 10%, rgba(0,212,255,.35), transparent 55%),
+        linear-gradient(180deg, #0b1020 0%, #111a3a 100%);
+      color: #e9eefc;
+    }
+    .app-shell{ max-width: 980px; }
+    .glass-card{
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    .badge-pill{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.4rem .7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(233,238,252,.9);
+      font-weight: 600;
+      font-size: .92rem;
+    }
+    .big-emoji{ font-size: 4.6rem; line-height: 1; }
+    .btn-gradient{
+      border: 0;
+      background: linear-gradient(135deg, #6ea8fe 0%, #7c4dff 100%);
+      border-radius: 12px;
+      padding: .85rem 1.1rem;
+      font-weight: 700;
+      box-shadow: 0 14px 35px rgba(124,77,255,.28);
+    }
+    .btn-gradient:hover{ filter: brightness(1.06); }
+    .subtle{ color: rgba(233,238,252,.78); }
+    .good{ color:#22c55e; }
+    .bad{ color:#ef4444; }
+    .list-clean li{ margin-bottom: .35rem; color: rgba(233,238,252,.86); }
+  </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container">
-        <div class="result-card {% if prediction == 0 %}unlikely{% else %}likely{% endif %}">
-            <div class="emoji">
-                {% if prediction == 0 %}
-                    😔
-                {% else %}
-                    🎉
-                {% endif %}
-            </div>
-            
-            <h2 class="text-2xl font-bold mb-4">
-                {% if prediction == 0 %}
-                    Customer is unlikely to purchase additional insurance
-                {% else %}
-                    Customer is likely to purchase additional insurance!
-                {% endif %}
-            </h2>
-            
-            <div class="mt-4 text-lg">
-                {% if prediction == 0 %}
-                    <p>Suggested Actions:</p>
-                    <ul class="list-none mt-2">
-                        <li>🎯 Review customer profile</li>
-                        <li>📞 Schedule a follow-up call</li>
-                        <li>💰 Consider special offers</li>
-                    </ul>
-                {% else %}
-                    <p>Next Steps:</p>
-                    <ul class="list-none mt-2">
-                        <li>✨ Prepare personalized package</li>
-                        <li>📅 Schedule consultation</li>
-                        <li>🌟 Present premium options</li>
-                    </ul>
-                {% endif %}
-            </div>
-            
-            <div class="mt-6">
-                <a href="/" class="back-button">Make Another Prediction</a>
-            </div>
-        </div>
+
+<body>
+  <div class="container app-shell py-4 py-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="h4 mb-1">Prediction Result</h1>
+        <div class="subtle">Model decision based on provided customer features.</div>
+      </div>
+      <span class="badge-pill">
+        {% if prediction == 0 %}
+          <span class="bad">Unlikely</span>
+        {% else %}
+          <span class="good">Likely</span>
+        {% endif %}
+      </span>
     </div>
+
+    <div class="glass-card p-4 p-md-5">
+      <div class="text-center">
+        <div class="big-emoji mb-3">
+          {% if prediction == 0 %}😔{% else %}🎉{% endif %}
+        </div>
+
+        <h2 class="h3 mb-2">
+          {% if prediction == 0 %}
+            Customer is unlikely to purchase additional insurance
+          {% else %}
+            Customer is likely to purchase additional insurance
+          {% endif %}
+        </h2>
+
+        <p class="subtle mb-4">
+          {% if prediction == 0 %}
+            Consider a follow-up strategy to improve conversion.
+          {% else %}
+            The customer shows strong interest signals.
+          {% endif %}
+        </p>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-start">
+            {% if prediction == 0 %}
+              <h3 class="h5 mb-3">Suggested actions</h3>
+              <ul class="list-clean">
+                <li>Review customer profile and previous interactions.</li>
+                <li>Schedule a follow-up call and propose an adapted offer.</li>
+                <li>Consider special discounts or bundling options.</li>
+              </ul>
+            {% else %}
+              <h3 class="h5 mb-3">Next steps</h3>
+              <ul class="list-clean">
+                <li>Prepare a personalized insurance package.</li>
+                <li>Schedule a consultation for plan details.</li>
+                <li>Present premium options and finalize the offer.</li>
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="d-grid d-sm-inline-block mt-4">
+          <a href="/" class="btn btn-gradient btn-lg">Make another prediction</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4 subtle">
+      &copy; 2026 Insurance Prediction • Result page
+    </div>
+  </div>
 </body>
 </html>

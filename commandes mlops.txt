@@ -1,0 +1,19 @@
+.\.venv\Scripts\activate.bat
+
+python --version 
+
+python pipeline.py
+
+
+
+docker build -t insurance_model .
+
+
+docker run --rm -p 5000:5000 insurance_model
+
+
+mlflow : 
+.\.venv\Scripts\activate.bat
+python --version 
+python pipeline.py
+mlflow ui --backend-store-uri ./mlruns
