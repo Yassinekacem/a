@@ -26,8 +26,8 @@ This project implements an end-to-end MLOps workflow to predict whether a custom
 ## 2. Local Setup
 
 ```bash
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/Yassinekacem/mlops-insurance-cicd-docker-k8s-.git
+cd mlops-insurance-cicd-docker-k8s-
 
 python3 -m venv venv
 # Windows
@@ -37,4 +37,5 @@ source venv/bin/activate
 
 pip install --upgrade pip
 pip install -r requirements.txt
+
 
